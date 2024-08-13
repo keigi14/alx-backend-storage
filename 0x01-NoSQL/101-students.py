@@ -1,29 +1,18 @@
 #!/usr/bin/env python3
-"""
-Return all students sorted by average score
-Prototype: def top_students(mongo_collection):
-The top must be ordered
-average score retuens with key = averageScore
-"""
+""" MongoDB Operations with Python using pymongo """
 
 
 def top_students(mongo_collection):
-    """
-    Prototype: def top_students(mongo_collection):
-    Returns all students sorted by average score
-    """
-    return mongo_collection.aggregate([
+    # sourcery skip: inline-immediately-returned-variable
+    """ Returns all students sorted by average score """
+    top_student = mongo_collection.aggregate([
         {
-            "$project":
-            {
+            "$project": {
                 "name": "$name",
                 "averageScore": {"$avg": "$topics.score"}
             }
         },
-        {
-            "$sort":
-            {
-                "averageScore": -1
-            }
-        }
+        {"$sort": {"averageScore": -1}}
     ])
+
+    return top_student
